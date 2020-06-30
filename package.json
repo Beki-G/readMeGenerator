@@ -1,0 +1,24 @@
+{
+  "name": "readme_generator",
+  "version": "1.0.0",
+  "description": "ReadMe Generator",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "Beki-G",
+  "license": "ISC",
+  "dependencies": {
+    "dotenv": "^8.0.0",
+    "inquirer": "^6.3.1"
+  },
+  "devDependencies": {},
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Beki-G/readMeGenerator.git"
+  },
+  "bugs": {
+    "url": "https://github.com/Beki-G/readMeGenerator/issues"
+  },
+  "homepage": "https://github.com/Beki-G/readMeGenerator#readme"
+}
