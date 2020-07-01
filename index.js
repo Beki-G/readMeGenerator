@@ -1,4 +1,5 @@
 const inquirer = require('inquirer');
+const markdown = require("./utils/generateMarkdown.js") 
 
 const questions = [
     {
@@ -57,10 +58,13 @@ function init() {
         .prompt(questions)
         .then(response=>{
             console.log(response)
+            const readMetxt = markdown(response);
+            console.log(readMetxt)
         })
         .catch(error=>{
             console.log(error)
         })
+    
 }
 
 init();
