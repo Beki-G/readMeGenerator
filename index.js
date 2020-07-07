@@ -74,24 +74,42 @@ async function getLicenses(){
 
 
     data.forEach(license =>{
-        const{name, key} = license
+        const{name, spdx_id} = license
         questions[6].choices.push({name});
-        licenseArr.push({name, key})
+        licenseArr.push({name, spdx_id})
     })
 
-    return (licenseArr)
+    return (licenseArr)  
 }
 
 async function init() {
+    const licenses = await getLicenses();
+    
     const response = await inquirer
         .prompt(questions)
         .catch(error=>{
             console.log(error)
         })
-    
-    const readMetxt = markdown(response);
+
+    let userLicense = " "
+    licenses.forEach(licenseType=>{
+        if(response.license === licenseType.name){
+            userLicense = licenseType.spdx_id
+        }
+    })
+
+
+    const config = {  
+        method: 'get',
+        url: "https://api.github.com/licenses/"+userLicense
+    }
+
+    const {data} = await axios(config)
+        .catch(error =>console.log(error))
+
+ 
+    const readMetxt = markdown(response, data.description);
     writeToFile(`./readmes/${response.title}_README.md`, readMetxt);
 }
 
-const licenses = getLicenses();
 init();

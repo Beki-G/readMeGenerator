@@ -1,9 +1,12 @@
-function generateMarkdown(data) {
+function generateMarkdown(data, licenseDescription) {
   //console.log(`${data.title}, ${data.description}, ${data.installation}`);
   return `
 # ${data.title}
 
+![badmath](https://img.shields.io/static/v1?label=license&message=`+encodeURI(data.license)+`&color=green)
+
 ## Description 
+
 ${data.description}
 
 ## Table of Contents
@@ -22,7 +25,7 @@ ${data.installation}
 ${data.usageInfo}
 
 ## License
-${data.license}
+${data.license} - ${licenseDescription}
 
 ## Contributing
 ${data.contribution}
