@@ -1,6 +1,7 @@
 const inquirer = require('inquirer');
 const markdown = require("./utils/generateMarkdown.js"); 
 const fs = require('fs');
+const axios = require('axios');
 
 const questions = [
     {
@@ -37,7 +38,7 @@ const questions = [
         name:"license",
         message: "What type of license do you want to add?",
         type: "list",
-        choices: ["Apache License 2.0", "GNU General Public License v3.0", "MIT License", "BSD 2-Clause \"Simplified\" license", "BSD 3-Clause \"New\" or \"Revised\" License", "Boost Software License 1.0", "Creative Commons Zero v1.0 Universal", "Eclipse Public License 1.0", "GNU Affero General Public License v3.0", "GNU General Public License v2.0", "GNU Lesser General Public License v2.1", "Mozilla Public License 2.0", "The Unlicense"]
+        choices: []
     },
     {
         name:"githubUsername",
@@ -59,6 +60,28 @@ function writeToFile(fileName, data) {
     })
 }
 
+async function getLicenses(){
+    const licenseArr =[]
+    const config = {  
+        method: 'get',
+        url: 'https://api.github.com/licenses'
+    }
+
+    const {data} = await axios(config)
+        .catch(err=>{
+            console.log(err)
+        })
+
+
+    data.forEach(license =>{
+        const{name, key} = license
+        questions[6].choices.push({name});
+        licenseArr.push({name, key})
+    })
+
+    return (licenseArr)
+}
+
 async function init() {
     const response = await inquirer
         .prompt(questions)
@@ -70,4 +93,5 @@ async function init() {
     writeToFile(`./readmes/${response.title}_README.md`, readMetxt);
 }
 
+const licenses = getLicenses();
 init();
