@@ -52,7 +52,6 @@ const questions = [
 ];
 
 function writeToFile(fileName, data) {
-
     fs.writeFile(fileName, data, err =>{
         if(err){
             return console.log(err);
@@ -60,19 +59,15 @@ function writeToFile(fileName, data) {
     })
 }
 
-function init() {
-    inquirer
+async function init() {
+    const response = await inquirer
         .prompt(questions)
-        .then(response=>{
-            //console.log(response)
-            const readMetxt = markdown(response);
-            //console.log(readMetxt)
-            writeToFile(`./readmes/${response.title}_README.md`, readMetxt);
-        })
         .catch(error=>{
             console.log(error)
         })
     
+    const readMetxt = markdown(response);
+    writeToFile(`./readmes/${response.title}_README.md`, readMetxt);
 }
 
 init();
