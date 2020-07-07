@@ -1,5 +1,4 @@
 # Node Modules
 node_modules
 
-#Readme Folder
-./readmes/
+.DS_Store/
